@@ -109,7 +109,7 @@ class FritzboxStateSensor(Entity):
             ATTR_WLAN1_SSID: self._wlan1_ssid,
             ATTR_WLAN2_STATE: self._wlan2_state,
             ATTR_WLAN2_SSID: self._wlan2_ssid,
-            ATTR_WLAN2_KEY: self._wlan2_key
+            ATTR_WLAN2_KEY: self._wlan2_key,
         }
         return attr
 
@@ -122,7 +122,7 @@ class FritzboxStateSensor(Entity):
             self._wlan1_ssid = self._fc.call_action("WLANConfiguration", "GetInfo")["NewSSID"]
             self._wlan2_state = self._fc.call_action("WLANConfiguration:2", "GetInfo")["NewStatus"]
             self._wlan2_ssid = self._fc.call_action("WLANConfiguration:2", "GetInfo")["NewSSID"]
-            self._wlan2_ssid = self._fc.call_action("WLANConfiguration:2", "GetSecurityKeys")["NewKeyPassphrase"]
+            self._wlan2_key = self._fc.call_action("WLANConfiguration:2", "GetSecurityKeys")["NewKeyPassphrase"]
             self._state = STATE_ONLINE if self._is_connected else STATE_OFFLINE
         except RequestException as err:
             self._state = STATE_UNAVAILABLE
