@@ -23,10 +23,10 @@ _LOGGER = logging.getLogger(__name__)
 CONF_DEFAULT_IP = '169.254.1.1'  # This IP is valid for all FRITZ!Box routers.
 
 ATTR_IS_CONNECTED = 'is_connected'
-ATTR_WLAN1_STATE = 'Up'
-ATTR_WLAN1_SSID = ''
-ATTR_WLAN2_STATE = 'Up'
-ATTR_WLAN2_SSID = ''
+ATTR_WLAN1_STATE = 'WLAN1_State'
+ATTR_WLAN1_SSID = 'WLAN1_SSID'
+ATTR_WLAN2_STATE = 'WLAN2_State'
+ATTR_WLAN2_SSID = 'WLAN2_SSID'
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=5)
 
