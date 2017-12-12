@@ -27,6 +27,7 @@ ATTR_WLAN1_STATE = 'WLAN1_State'
 ATTR_WLAN1_SSID = 'WLAN1_SSID'
 ATTR_WLAN2_STATE = 'WLAN2_State'
 ATTR_WLAN2_SSID = 'WLAN2_SSID'
+ATTR_WLAN2_KEY = "WLAN2_KEY"
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=5)
 
@@ -79,6 +80,7 @@ class FritzboxStateSensor(Entity):
         self._wlan1_ssid = None
         self._wlan2_state = None
         self._wlan2_ssid = None
+        self._wlan2_key = None
 
     @property
     def name(self):
@@ -107,6 +109,7 @@ class FritzboxStateSensor(Entity):
             ATTR_WLAN1_SSID: self._wlan1_ssid,
             ATTR_WLAN2_STATE: self._wlan2_state,
             ATTR_WLAN2_SSID: self._wlan2_ssid,
+            ATTR_WLAN2_KEY: self._wlan2_key
         }
         return attr
 
@@ -119,6 +122,7 @@ class FritzboxStateSensor(Entity):
             self._wlan1_ssid = self._fc.call_action("WLANConfiguration", "GetInfo")["NewSSID"]
             self._wlan2_state = self._fc.call_action("WLANConfiguration:2", "GetInfo")["NewStatus"]
             self._wlan2_ssid = self._fc.call_action("WLANConfiguration:2", "GetInfo")["NewSSID"]
+            self._wlan2_ssid = self._fc.call_action("WLANConfiguration:2", "GetSecurityKeys")["NewKeyPassphrase"]
             self._state = STATE_ONLINE if self._is_connected else STATE_OFFLINE
         except RequestException as err:
             self._state = STATE_UNAVAILABLE
